@@ -1,0 +1,48 @@
+.navbar {
+  position: absolute;   /* stick it inside hero */
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%); /* center horizontally */
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  gap: 6.4rem;
+  padding: 4.8rem 0;
+  z-index: 20;          /* above overlay */
+  font-weight: 300;
+  transition: background 0.3s ease, color 0.3s ease;
+}
+
+.navbar a {
+  letter-spacing: 0.24rem; /* 2.4px if 1rem=10px */
+  font-size: 1.6rem;
+  text-decoration: none;
+  transition: 0.3s ease;
+  position: relative;
+  color: inherit;
+}
+/* Hover underline effect */
+.navbar a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.4rem;
+  width: 0;
+  height: 2px;
+  background-color: currentColor;
+  transition: width 0.3s ease;
+}
+
+.navbar a:hover::after {
+  width: 100%;
+}
+
+/* Light theme */
+.navbar.light a {
+  color: #fff;
+}
+
+/* Dark theme */
+.navbar.dark a{
+  color: #000;
+}
