@@ -1,0 +1,119 @@
+.paintings {
+  display: flex;
+  flex-direction: column;
+  gap: 50px;
+  padding: 20px;
+}
+
+.carousel-section {
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.carousel-title {
+  text-align: center;
+  margin-bottom: 20px;
+  font-size: 1.5rem;
+}
+
+.carousel-container {
+  overflow: hidden;
+  position: relative;
+  width: 100%;
+}
+
+.carousel-items {
+  display: flex;
+}
+
+.carousel-item {
+  flex: 0 0 calc(100% / 3); /* Show 3 items at a time */
+  text-align: center;
+  padding: 10px;
+  box-sizing: border-box;
+}
+
+.carousel-item img {
+  width: 100%;
+  border-radius: 8px;
+  transition: transform 0.3s ease;
+}
+
+.carousel-item img:hover {
+  transform: scale(1.05);
+}
+
+.carousel-nav {
+  display: flex;
+  justify-content: center;
+  margin-top: 10px;
+}
+
+.nav-btn {
+  background: #000;        /* black by default */
+  color: #fff;             /* white text */
+  border: none;            /* remove border */
+  padding: 8px 14px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 4px;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+}
+
+.nav-btn:hover {
+  background: #fff;        /* white background on hover */
+  color: #000;             /* black text on hover */
+  outline: 1px solid #000;  /* add border for contrast */
+}
+
+/* Example background classes */
+.golden-bg {
+  background: #fff8e1;
+}
+
+.wooden-bg {
+  background: #f3e5ab;
+}
+
+.white-bg {
+  background: #f9f9f9;
+}
+.carousel-item {
+  flex: 0 0 calc(100% / 3);
+  text-align: center;
+  padding: 15px;
+  box-sizing: border-box;
+  border-radius: 10px;
+  margin: 0 10px;
+  background: #fff; /* fallback background */
+}
+
+/* Frame styles per item */
+.golden-frame {
+  background: #fff8e1;              /* soft golden background */
+  border: 4px solid #d4af37;        /* metallic gold border */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.wooden-frame {
+  background: #f3e5ab;              /* light wood background */
+  border: 4px solid #8b5a2b;        /* wood brown border */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+}
+
+.white-frame {
+  background: #f9f9f9;              /* clean white background */
+  border: 4px solid #ddd;           /* subtle gray border */
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+
+.carousel-item img {
+  width: 100%;
+  border-radius: 6px;
+  transition: transform 0.3s ease;
+}
+
+.carousel-item img:hover {
+  transform: scale(1.05);
+}

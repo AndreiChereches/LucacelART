@@ -1,0 +1,121 @@
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  padding: 4.8rem 0;
+  z-index: 20;
+  font-weight: 300;
+  transition: background 0.3s ease, color 0.3s ease;
+  
+}
+
+/* Links container */
+.nav-links {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 6.4rem; /* keeps spacing between links */
+  transition: right 0.3s ease;
+}
+
+.nav-links a {
+  letter-spacing: 0.24rem;
+  font-size: 1.6rem;
+  text-decoration: none;
+  transition: 0.3s ease;
+  position: relative;
+  color: inherit;
+}
+
+/* Hover underline */
+.nav-links a::after {
+  content: "";
+  position: absolute;
+  left: 0;
+  bottom: -0.4rem;
+  width: 0;
+  height: 2px;
+  background-color: currentColor;
+  transition: width 0.3s ease;
+}
+.nav-links a:hover::after {
+  width: 100%;
+}
+
+/* Light theme */
+.navbar.light a {
+  color: #fff;
+}
+
+/* Dark theme */
+.navbar.dark a {
+  color: #000;
+}
+
+/* Burger button */
+.burger {
+  display: none;
+  flex-direction: column;
+  justify-content: space-between;
+  width: 28px;
+  height: 20px;
+  cursor: pointer;
+  z-index: 30;
+  position: absolute;
+  right: 2rem;
+  top: 2rem;
+}
+.burger span {
+  display: block;
+  height: 3px;
+  width: 100%;
+  background: currentColor;
+  border-radius: 2px;
+  transition: 0.3s ease;
+}
+
+/* Burger animation into X */
+.burger.open span:nth-child(1) {
+  transform: rotate(45deg) translate(5px, 5px);
+}
+.burger.open span:nth-child(2) {
+  opacity: 0;
+}
+.burger.open span:nth-child(3) {
+  transform: rotate(-45deg) translate(5px, -5px);
+}
+
+/* ========================= */
+/* Responsive adjustments    */
+/* ========================= */
+@media (max-width: 900px) {
+  .burger {
+    display: flex;
+  }
+
+  .nav-links {
+    position: fixed;
+    top: 0;
+    right: -100%;
+    height: 100vh;
+    width: 70%;
+    background: rgba(0, 0, 0, 0.95);
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    gap: 2.4rem;
+  }
+
+  .nav-links.open {
+    right: 0;
+  }
+
+  .nav-links a {
+    font-size: 2rem;
+    color: #fff; /* ensure visible on dark background */
+  }
+}

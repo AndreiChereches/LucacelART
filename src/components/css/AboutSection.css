@@ -1,0 +1,170 @@
+.about-section {
+  text-align: center;
+  padding: 20rem 0;
+  background-color: #fff;
+  color: #111;
+  overflow: hidden;
+}
+
+.about-title {
+  font-size: 6.4rem;
+  font-weight: 400;
+  letter-spacing: 3.2px;
+}
+
+.about-subtitle {
+  font-size: 1.4rem;
+  color: #444;
+  display: inline-block;
+  padding: 0.6rem 0;
+  margin-bottom: 5rem;
+}
+
+/* ===== CAROUSEL LAYOUT (two independent tracks) ===== */
+.about-carousel {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 4rem;
+  align-items: start;
+  max-width: 1200px;
+  margin: 0 auto;
+}
+
+/* Each track viewport: masks overflow so only one slide is visible */
+.about-viewport {
+  position: relative;
+  width: 100%;
+  overflow: hidden;
+}
+
+/* Slider track: moved via inline transform */
+.about-slider {
+  display: flex;
+  width: 100%;
+  transition: transform 1.2s ease;
+  will-change: transform;
+}
+
+/* Text track moves opposite by reversing flow */
+.about-text-slider {
+  flex-direction: row-reverse;
+}
+
+/* Each slide fills the viewport width */
+.about-slide {
+  min-width: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ===== IMAGE SIDE ===== */
+.about-image-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.about-image {
+  width: 100%;
+  max-width: 45rem;
+  object-fit: cover;
+}
+
+/* ===== TEXT SIDE ===== */
+.about-text-container {
+  display: flex;
+  align-items: center;
+  text-align: left;
+  padding: 0 1rem;
+  max-width: 45rem;
+}
+
+.about-text {
+  font-size: 1.6rem;
+  line-height: 1.7;
+  color: #222;
+}
+
+/* ===== CONTROLS ===== */
+.about-controls {
+  margin: 4rem 0 2rem;
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+}
+
+.arrow-btn {
+  background-color: #000;
+  color: #fff;
+  border: none;
+  width: 12rem;
+  height: 6rem;
+  font-size: 2rem;
+  cursor: pointer;
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+.arrow-btn:hover {
+  background-color: #333;
+}
+
+/* ===== FOOTER & CTA ===== */
+.about-footer {
+  font-size: 1.4rem;
+  margin-top: 2rem;
+  color: #333;
+}
+
+.learn-more {
+  display: inline-block;
+  margin-top: 1rem;
+  color: #888;
+  font-size: 1.4rem;
+  text-decoration: none;
+  transition: color 0.3s ease;
+}
+
+.learn-more:hover {
+  color: #000;
+}
+
+/* ===== RESPONSIVE ===== */
+@media (max-width: 992px) {
+  .about-carousel {
+    grid-template-columns: 1fr;
+    gap: 3rem;
+  }
+  .about-text-container {
+    justify-content: center;
+    text-align: center;
+  }
+  .about-image {
+    max-width: 36rem;
+  }
+}
+
+@media (max-width: 600px) {
+  .about-section {
+    padding: 6rem 6%;
+  }
+  .about-title {
+    font-size: 2rem;
+  }
+  .about-subtitle {
+    font-size: 1.2rem;
+    margin-bottom: 3.5rem;
+  }
+  .about-image {
+    max-width: 30rem;
+  }
+  .about-text {
+    font-size: 1.4rem;
+    line-height: 1.6;
+  }
+  .arrow-btn {
+    width: 5rem;
+    height: 5rem;
+    font-size: 1.8rem;
+  }
+}

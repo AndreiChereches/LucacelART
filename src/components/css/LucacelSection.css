@@ -1,0 +1,59 @@
+.lucacel-section {
+  padding: 10rem 10rem;
+  min-height: 100vh;
+  display: flex; /* make section a flexbox */
+  align-items: center; /* vertical centering */
+  justify-content: center; /* optional: horizontal centering */
+}
+
+.lucacel-container {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 4rem;
+  flex-wrap: wrap;
+}
+
+.lucacel-image {
+  flex: 1 1 300px;
+  max-width: 400px;
+}
+
+.lucacel-image img {
+  width: 100%;
+  height: auto;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.5);
+}
+
+.lucacel-text {
+  flex: 2 1 400px;
+  font-size: 1.6rem;
+  line-height: 1.6;
+}
+
+.lucacel-text h2 {
+  font-size: 3rem;
+  margin-bottom: 2rem;
+  font-weight: 400;
+  letter-spacing: 1px;
+}
+
+.lucacel-text p {
+  margin-bottom: 1.6rem;
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .lucacel-container {
+    flex-direction: column;
+    text-align: center;
+  }
+
+  .lucacel-text h2 {
+    font-size: 2.4rem;
+  }
+
+  .lucacel-text {
+    font-size: 1.4rem;
+  }
+}
