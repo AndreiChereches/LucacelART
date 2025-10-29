@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import "./LandingPage.css";
-import backgroundVideo from "./media/background_video.MOV";
+import backgroundVideo from "./media/bgvideo.mp4";
 import Navbar from "./components/Navbar";
 import Footer from "./components/Footer";
 import AboutSection from "./components/AboutSection";
