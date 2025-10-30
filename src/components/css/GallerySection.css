@@ -17,7 +17,7 @@
 
 .gallery-grid {
   display: grid;
-  grid-template-columns: repeat(5, 1fr); /* odd number for symmetry */
+  grid-template-columns: repeat(5, 1fr);
   gap: 3rem;
 }
 
@@ -27,15 +27,15 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  overflow: visible; /* let the scaled tile render cleanly */
+  overflow: visible;
   transform-origin: center center;
   transition: transform 0.35s ease, box-shadow 0.35s ease;
   will-change: transform;
 }
 
 .gallery-item:hover {
-  transform: scale(1.06); /* zoom the entire tile so it doesn't clip */
-  z-index: 2; /* lift above neighbors while hovering */
+  transform: scale(1.06);
+  z-index: 2;
 }
 
 /* Anchor as the frame */
@@ -49,25 +49,25 @@
 /* Image fills as much as possible without distortion */
 .gallery-item img {
   position: absolute;
-  inset: 0; /* center via absolute positioning */
+  inset: 0;
   margin: auto;
   max-width: 100%;
   max-height: 100%;
-  width: auto; /* preserve aspect ratio */
-  height: auto; /* preserve aspect ratio */
-  object-fit: contain; /* no cropping, no stretching */
+  width: auto;
+  height: auto;
+  object-fit: contain;
   background: transparent;
-  pointer-events: none; /* make the whole tile clickable */
+  pointer-events: none;
 }
 
 /* Row 1: head painting centered */
 .head {
-  grid-column: 3; /* middle column */
+  grid-column: 3; /* middle of 5 columns */
   grid-row: 1;
   height: 300px;
 }
 
-/* Row 2: two wide paintings */
+/* Row 2: two wide paintings (desktop 5-col) */
 .wide-left {
   grid-column: 2 / span 2; /* columns 2–3 */
   grid-row: 2;
@@ -106,7 +106,7 @@
   height: 350px;
 }
 
-/* Accessibility: keyboard focus mirrors hover */
+/* Accessibility */
 .gallery-item a:focus-visible {
   outline: none;
 }
@@ -120,7 +120,7 @@
 /* Responsive adjustments    */
 /* ========================= */
 
-/* Large desktops (≥1400px) */
+/* Large desktops (≤1400px) */
 @media (max-width: 1400px) {
   .gallery-grid {
     grid-template-columns: repeat(5, 1fr);
@@ -133,14 +133,48 @@
 }
 
 /* Laptops / tablets landscape (≤1200px) */
+/* Switch to 3 columns, keep head centered, place wide images side-by-side cleanly */
 @media (max-width: 1200px) {
   .gallery-grid {
     grid-template-columns: repeat(3, 1fr);
     gap: 2rem;
   }
+
   .head {
-    grid-column: 2; /* keep centered in 3-col grid */
+    grid-column: 2; /* middle of 3 columns */
+    height: 280px;
   }
+
+  /* Place wide items on row 2: 1–2 and 2–3 */
+  .wide-left {
+    grid-column: 1 / span 2; /* columns 1–2 */
+    grid-row: auto;
+    height: auto;            /* let content define height */
+  }
+  .wide-right {
+    grid-column: 2 / span 2; /* columns 2–3 */
+    grid-row: auto;
+    height: auto;
+  }
+
+  /* Allow images to flow naturally to prevent overlap at this breakpoint */
+  .gallery-item img {
+    position: static;
+    display: block;
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    margin: 0;
+  }
+
+  /* Remove fixed heights so tiles expand with content */
+  .gallery-item {
+    height: auto;
+  }
+  .tall1, .tall2, .tall3, .small2, .small3 {
+    height: auto;
+  }
+
   .gallery-section-title {
     font-size: 3.6rem;
     margin-bottom: 6rem;
@@ -148,23 +182,37 @@
 }
 
 /* Tablets portrait (≤900px) */
+/* Two columns, stack wide items full-width; hide one small to declutter */
 @media (max-width: 900px) {
   .gallery-grid {
     grid-template-columns: repeat(2, 1fr);
     gap: 1.5rem;
   }
+
   .head {
     grid-column: 1 / -1; /* span full width */
+    height: auto;
   }
+
+  /* Stack wide items vertically */
   .wide-left,
-  .wide-right,
-  .tall1,
-  .tall2,
-  .tall3,
-  .small2,
-  .small3 {
-    grid-column: span 1;
+  .wide-right {
+    grid-column: 1 / -1; /* full width */
+    height: auto;
   }
+
+  /* Place tall/small items cleanly */
+  .tall1 { grid-column: 1; }
+  .small3 { grid-column: 2; }
+  .tall2 { grid-column: 1; }
+  .small2 { grid-column: 2; }
+  .tall3 { grid-column: 1 / -1; } /* full width to avoid tight stacking */
+
+  /* Optional: hide one small to avoid cramped layout */
+  .small3 {
+    display: none;
+  }
+
   .gallery-section-title {
     font-size: 2.8rem;
     margin-bottom: 4rem;
@@ -172,21 +220,31 @@
 }
 
 /* Phones (≤600px) */
+/* Single column, show a curated set; everything flows, no overlap */
 @media (max-width: 600px) {
   .gallery-grid {
-    grid-template-columns: 1fr; /* single column */
+    grid-template-columns: 1fr;
     gap: 1.2rem;
   }
+
   .gallery-item {
     grid-column: 1;
-    height: auto; /* let height be defined by image */
+    height: auto;
   }
+
   .gallery-item img {
-    position: static; /* reset absolute positioning */
+    position: static;
     width: 100%;
     height: auto;
     object-fit: contain;
   }
+
+  /* Curate: keep head + a few highlights, hide extras to keep it clean */
+  .wide-right,
+  .small2 {
+    display: none;
+  }
+
   .gallery-section-title {
     font-size: 2rem;
     margin-bottom: 2rem;

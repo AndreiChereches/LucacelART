@@ -102,6 +102,9 @@
 
 /* Responsive */
 @media (max-width: 768px) {
+  .footer{
+    padding: 10% 10%;
+  }
   .footer-form-grid {
     grid-template-columns: 1fr;
   }
