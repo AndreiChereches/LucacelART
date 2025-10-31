@@ -12,7 +12,49 @@
   transition: background 0.3s ease, color 0.3s ease;
   
 }
+.nav-links a {
+  color: transparent;                 /* transparent fill */
+  -webkit-text-stroke: 0.5px #000;    /* lighter outline */
+  text-decoration: none;
+  margin-right: 18px;
+  font-weight: 700;
+  letter-spacing: 0.02em;
+  transition: -webkit-text-stroke-width 0.2s ease, -webkit-text-stroke-color 0.2s ease;
+}
 
+/* Fallback: white fill + a very soft shadow */
+@supports not (-webkit-text-stroke: 1px black) {
+  .nav-links a {
+    color: #fff;
+    text-shadow: 0 0.5px 1px rgba(0,0,0,0.45);
+  }
+}
+
+.nav-links a:hover {
+  /*webkit-text-stroke: 1px #000; */     /* slightly heavier on hover */
+}
+/* show pointer on hover for navbar links and burger */
+.nav-links a,
+.nav-links a:hover,
+.nav-links a:active,
+.nav-links a:focus {
+  cursor: pointer;
+}
+
+/* also make the burger show pointer */
+.burger,
+.burger:hover,
+.burger:focus {
+  cursor: pointer;
+}
+
+/* optional: visible focus ring for keyboard users */
+.nav-links a:focus,
+.burger:focus {
+  outline: 3px solid rgba(255,255,255,0.12);
+  outline-offset: 6px;
+  border-radius: 4px;
+}
 /* Links container */
 .nav-links {
   display: flex;
@@ -24,7 +66,7 @@
 
 .nav-links a {
   letter-spacing: 0.24rem;
-  font-size: 1.6rem;
+  font-size: 1.8rem;
   text-decoration: none;
   transition: 0.3s ease;
   position: relative;

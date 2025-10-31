@@ -14,7 +14,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/paintings" element={<Paintings />} />
+        <Route path="/paintings" element={<LandingPage />} />
         <Route path="/scrollgallery" element={<ScrollGallery />} />
       </Routes>
     </BrowserRouter>
