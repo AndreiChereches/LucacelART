@@ -62,7 +62,7 @@ export default function Footer() {
 
         <div className="footer-info">
           <p>
-            © 2025 LucacelART. All rights reserved. Developed by AuroraDigital
+            © 2025 LucacelART. All rights reserved. Developed by AndreiChereches
           </p>
           <p>alucacel@gmail.com</p>
           <p>+40701200300</p>
