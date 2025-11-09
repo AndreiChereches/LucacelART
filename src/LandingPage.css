@@ -68,3 +68,28 @@ body {
   letter-spacing: 9.6px;
   font-size: 9.6rem;
 }
+
+/* ===== Responsive Design ===== */
+/* Tablets */
+@media (max-width: 900px) {
+  .title {
+    font-size: 6.4rem;
+    letter-spacing: 6.4px;
+  }
+}
+
+/* Phones */
+@media (max-width: 600px) {
+  .title {
+    font-size: 8rem;
+    letter-spacing: 4px;
+  }
+}
+
+/* Small phones */
+@media (max-width: 480px) {
+  .title {
+    font-size: 6.4rem;
+    letter-spacing: 3px;
+  }
+}

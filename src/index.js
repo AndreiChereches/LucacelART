@@ -7,6 +7,7 @@ import { BrowserRouter, Routes, Route } from "react-router-dom";
 import LandingPage from "./LandingPage";
 import Paintings from "./components/Paintings";
 import ScrollGallery from "./components/ScrollGallery";
+import PaintingsPage from "./PaintingsPage";
 
 const root = ReactDOM.createRoot(document.getElementById("root"));
 root.render(
@@ -14,7 +15,7 @@ root.render(
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<LandingPage />} />
-        <Route path="/paintings" element={<LandingPage />} />
+        <Route path="/paintings" element={<PaintingsPage />} />
         <Route path="/scrollgallery" element={<ScrollGallery />} />
       </Routes>
     </BrowserRouter>

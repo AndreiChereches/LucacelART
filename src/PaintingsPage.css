@@ -1,0 +1,142 @@
+.paintings-page {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(135deg, #2a2a2a 0%, #1a1a1a 100%);
+  color: #fff;
+}
+
+.coming-soon-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12rem 2rem 8rem;
+  min-height: calc(100vh - 200px);
+}
+
+.coming-soon-content {
+  max-width: 800px;
+  text-align: center;
+  animation: fadeIn 1s ease-in;
+}
+
+.coming-soon-title {
+  font-size: 6.4rem;
+  font-weight: 300;
+  letter-spacing: 0.4rem;
+  color: #fff;
+  margin-bottom: 2rem;
+}
+
+.divider {
+  width: 100px;
+  height: 2px;
+  background-color: #fff;
+  margin: 2rem auto 3rem;
+  animation: expandWidth 1s ease-in 0.5s both;
+}
+
+.coming-soon-subtitle {
+  font-size: 3.2rem;
+  font-weight: 300;
+  letter-spacing: 0.8rem;
+  color: #ccc;
+  margin-bottom: 4rem;
+  text-transform: uppercase;
+}
+
+.coming-soon-description {
+  font-size: 1.6rem;
+  line-height: 1.8;
+  color: #ddd;
+  margin-bottom: 2rem;
+  letter-spacing: 0.1rem;
+  font-weight: 300;
+}
+
+.coming-soon-cta {
+  margin-top: 5rem;
+  font-size: 1.6rem;
+  color: #ccc;
+  letter-spacing: 0.1rem;
+}
+
+.coming-soon-cta .link-to-gallery {
+  background: none;
+  border: none;
+  color: #fff;
+  text-decoration: none;
+  font-weight: 400;
+  border-bottom: 1px solid #fff;
+  transition: all 0.3s ease;
+  margin-left: 0.5rem;
+  cursor: pointer;
+  font-size: inherit;
+  font-family: inherit;
+  letter-spacing: inherit;
+  padding: 0;
+}
+
+.coming-soon-cta .link-to-gallery:hover {
+  color: #ccc;
+  border-bottom-color: #ccc;
+}
+
+/* Animations */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(20px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+@keyframes expandWidth {
+  from {
+    width: 0;
+  }
+  to {
+    width: 100px;
+  }
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .coming-soon-title {
+    font-size: 4rem;
+    letter-spacing: 0.2rem;
+  }
+
+  .coming-soon-subtitle {
+    font-size: 2.4rem;
+    letter-spacing: 0.4rem;
+  }
+
+  .coming-soon-description {
+    font-size: 1.4rem;
+  }
+
+  .coming-soon-container {
+    padding: 10rem 2rem 6rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .coming-soon-title {
+    font-size: 3rem;
+  }
+
+  .coming-soon-subtitle {
+    font-size: 2rem;
+    letter-spacing: 0.2rem;
+  }
+
+  .coming-soon-description {
+    font-size: 1.2rem;
+  }
+}
+

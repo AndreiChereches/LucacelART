@@ -2,7 +2,9 @@
    Tidied: duplicates removed, rules consolidated. No behavioral changes. */
 
 /* 1) Global black fallback (lowest layer) */
-html, body, #root {
+html,
+body,
+#root {
   /*background-color: #000;*/
 }
 
@@ -24,14 +26,16 @@ html, body, #root {
   inset: 0;
   background-size: cover;
   background-position: center;
-  z-index: 0;                /* behind content (content uses z-index > 0) */
+  z-index: 0; /* behind content (content uses z-index > 0) */
   opacity: 0;
   pointer-events: none;
   will-change: opacity, transform;
-  background-color: rgba(0,0,0,1); /* fallback while image loads/fades */
+  background-color: rgba(0, 0, 0, 1); /* fallback while image loads/fades */
   background-blend-mode: normal;
 }
-.sg-bg.visible { opacity: 1; }
+.sg-bg.visible {
+  opacity: 1;
+}
 .sg-bg.sg-bg-current,
 .sg-bg.sg-bg-prev {
   will-change: opacity, transform;
@@ -55,7 +59,9 @@ html, body, #root {
   box-sizing: border-box;
   opacity: 0;
 }
-.sg-content.visible { opacity: 1; }
+.sg-content.visible {
+  opacity: 1;
+}
 
 /* Centered header (title / subtitle / date) horizontally near the top */
 .sg-header {
@@ -94,13 +100,13 @@ html, body, #root {
 .sg-main {
   display: flex;
   gap: 32px;
-  flex: 1 1 auto;                 /* stretch to fill available vertical space */
+  flex: 1 1 auto; /* stretch to fill available vertical space */
   align-items: stretch;
   width: 100%;
   max-width: 1200px;
   margin: 0 auto;
   box-sizing: border-box;
-  margin-bottom: 48px;            /* leave space below the main area */
+  margin-bottom: 48px; /* leave space below the main area */
 }
 
 /* Left: scrollable text area (fills height) */
@@ -109,11 +115,13 @@ html, body, #root {
   flex: 1 1 55%;
   min-width: 320px;
   max-width: 760px;
-  max-height: calc(100vh - 64px - 360px); /* navbar (64) + header + extra spacing = 360px; tweak if needed */
+  max-height: calc(
+    100vh - 64px - 360px
+  ); /* navbar (64) + header + extra spacing = 360px; tweak if needed */
   overflow: auto;
   padding: 22px;
   background: rgba(30, 30, 30, 0.78); /* grayish background */
-  box-shadow: 0 8px 30px rgba(0,0,0,0.45);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.45);
   color: #ffffff;
   line-height: 1.5;
   display: block;
@@ -137,7 +145,9 @@ html, body, #root {
   align-items: center;
   justify-content: center;
   overflow: hidden;
-  max-height: calc(100vh - 64px - 200px); /* keep image visually balanced with textbox */
+  max-height: calc(
+    100vh - 64px - 200px
+  ); /* keep image visually balanced with textbox */
 }
 
 .sg-side-content img {
@@ -145,8 +155,8 @@ html, body, #root {
   width: auto;
   height: 100%;
   max-width: 100%;
-  object-fit: contain;   /* preserves entire image in the column; change to cover if you prefer cropping */
-  box-shadow: 0 12px 40px rgba(0,0,0,0.35);
+  object-fit: contain; /* preserves entire image in the column; change to cover if you prefer cropping */
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
 }
 
 /* Indicator row (below main) */
@@ -178,8 +188,7 @@ html, body, #root {
   overflow: hidden;
 
   /* white panel and padding */
-  background: #fff;
-  padding: 24px;               /* change this to increase/decrease inner spacing */
+  padding: 12px; /* change this to increase/decrease inner spacing */
   box-sizing: border-box;
 
   /* match textbox vertical space (same calculation as textbox max-height) */
@@ -193,7 +202,7 @@ html, body, #root {
   height: 100%;
   max-width: 100%;
   object-fit: contain;
-  box-shadow: 0 12px 40px rgba(0,0,0,0.15);
+  box-shadow: 0 12px 40px rgba(0, 0, 0, 0.15);
   background: transparent;
 }
 
@@ -206,12 +215,24 @@ html, body, #root {
 }
 
 @keyframes sg-fade-in {
-  from { opacity: 0; transform: translateY(6px); }
-  to   { opacity: 1; transform: translateY(0); }
+  from {
+    opacity: 0;
+    transform: translateY(6px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 @keyframes sg-fade-out {
-  from { opacity: 1; transform: translateY(0); }
-  to   { opacity: 0; transform: translateY(-6px); }
+  from {
+    opacity: 1;
+    transform: translateY(0);
+  }
+  to {
+    opacity: 0;
+    transform: translateY(-6px);
+  }
 }
 
 /* Ensure no unexpected white backgrounds repeat */
@@ -221,11 +242,33 @@ html, body, #root {
 
 /* Responsive adjustments */
 @media (max-width: 1100px) {
-  .sg-title { font-size: clamp(2.8rem, 8vw, 6.4rem); }
-  .sg-subtitle, .sg-date, .sg-textbox p { font-size: clamp(1.4rem, 3.2vw, 2.4rem); }
-  .sg-content { padding: 4vh 4vw; top: 56px; }
-  .sg-main { flex-direction: column-reverse; gap: 18px; margin-bottom: 28px; }
-  .sg-side-content { width: 100%; height: 40vh; max-height: 420px; }
-  .sg-textbox { max-height: 50vh; padding: 20px; }
-  .sg-textbox p { font-size: clamp(1.4rem, 3vw, 2.4rem); }
+  .sg-title {
+    font-size: clamp(2.8rem, 8vw, 6.4rem);
+  }
+  .sg-subtitle,
+  .sg-date,
+  .sg-textbox p {
+    font-size: clamp(1.4rem, 3.2vw, 2.4rem);
+  }
+  .sg-content {
+    padding: 4vh 4vw;
+    top: 56px;
+  }
+  .sg-main {
+    flex-direction: column-reverse;
+    gap: 18px;
+    margin-bottom: 28px;
+  }
+  .sg-side-content {
+    width: 100%;
+    height: 40vh;
+    max-height: 420px;
+  }
+  .sg-textbox {
+    max-height: 50vh;
+    padding: 20px;
+  }
+  .sg-textbox p {
+    font-size: clamp(1.4rem, 3vw, 2.4rem);
+  }
 }

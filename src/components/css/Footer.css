@@ -95,6 +95,28 @@
   line-height: 1.6;
   text-align: center;
 }
+
+.footer-social {
+  display: flex;
+  justify-content: center;
+  gap: 2rem;
+  margin-top: 2rem;
+}
+
+.social-icon {
+  color: #aaa;
+  transition: color 0.3s ease;
+  display: inline-block;
+}
+
+.social-icon:hover {
+  color: #fff;
+}
+
+.social-icon svg {
+  width: 24px;
+  height: 24px;
+}
 .footer-right {
   display: flex;
   flex-direction: column; /* stack label above textarea */
