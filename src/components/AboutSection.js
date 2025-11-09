@@ -3,7 +3,6 @@ import "./css/AboutSection.css";
 
 import img1 from "../media/about1.png";
 import img2 from "../media/about2.png";
-import img3 from "../media/about3.png";
 import img4 from "../media/about4.png";
 
 export default function AboutSection() {

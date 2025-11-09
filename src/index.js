@@ -5,7 +5,6 @@ import "./index.css";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 
 import LandingPage from "./LandingPage";
-import Paintings from "./components/Paintings";
 import ScrollGallery from "./components/ScrollGallery";
 import PaintingsPage from "./PaintingsPage";
 

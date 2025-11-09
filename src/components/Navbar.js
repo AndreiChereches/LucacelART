@@ -58,16 +58,16 @@ export default function Navbar({ theme = "light" }) {
 
       {/* Links */}
       <div className={`nav-links ${isOpen ? "open" : ""}`}>
-        <a onClick={() => goTo("/", "about")} role="button" tabIndex={0}>
+        <a href="#about" onClick={(e) => { e.preventDefault(); goTo("/", "about"); }} role="button" tabIndex={0}>
           about my art
         </a>
 
-        <a onClick={() => goTo("/paintings", "")} role="button" tabIndex={0}>
+        <a href="/paintings" onClick={(e) => { e.preventDefault(); goTo("/paintings", ""); }} role="button" tabIndex={0}>
           paintings
         </a>
 
         {/* Expositions: explicitly go to /scrollgallery (no hash) */}
-        <a onClick={() => goTo("/scrollgallery", "")} role="button" tabIndex={0}>
+        <a href="/scrollgallery" onClick={(e) => { e.preventDefault(); goTo("/scrollgallery", ""); }} role="button" tabIndex={0}>
           expositions
         </a>
         {
@@ -80,11 +80,11 @@ export default function Navbar({ theme = "light" }) {
         }
 
         {/* lucacel: should go to landing page section #lucacel */}
-        <a onClick={() => goTo("/", "lucacel")} role="button" tabIndex={0}>
+        <a href="#lucacel" onClick={(e) => { e.preventDefault(); goTo("/", "lucacel"); }} role="button" tabIndex={0}>
           lucacel
         </a>
 
-        <a onClick={() => goTo("/", "contact")} role="button" tabIndex={0}>
+        <a href="#contact" onClick={(e) => { e.preventDefault(); goTo("/", "contact"); }} role="button" tabIndex={0}>
           contact
         </a>
       </div>

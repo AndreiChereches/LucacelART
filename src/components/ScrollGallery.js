@@ -1,9 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import "./css/ScrollGallery.css";
 import Navbar from "../components/Navbar";
-import madridBg from "../media/madridmock.png";
-import emptyroom from "../media/emptyroom.png";
-import madridSide from "../media/afismadrid.png";
 import madridSilvaniaSide from "../media/afissilvania.png";
 import chicagoSide from "../media/afischicago.png";
 import budapestSide from "../media/afisbudapesta.png";
