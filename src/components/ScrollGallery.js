@@ -65,9 +65,35 @@ export default function ScrollGallery() {
   const [animating, setAnimating] = useState(false);
   const lastWheel = useRef(0);
   const FADE_MS = 600;
+  const DEBOUNCE_MS = 800; // Increased debounce time for trackpads
 
   // ref for the scrollable textbox so we can detect wheel origin
   const textBoxRef = useRef(null);
+  // ref for the stage element
+  const stageRef = useRef(null);
+
+  // Touch handling for mobile
+  const touchStartY = useRef(null);
+  const touchStartTime = useRef(null);
+  const touchStartTarget = useRef(null);
+
+  // Wheel delta accumulation for trackpads
+  const wheelDeltaAccumulator = useRef(0);
+  const isProcessingWheel = useRef(false);
+  const wheelTimeoutId = useRef(null);
+
+  // Use refs to track current state values to avoid stale closures
+  const indexRef = useRef(index);
+  const animatingRef = useRef(animating);
+
+  // Keep refs in sync with state
+  useEffect(() => {
+    indexRef.current = index;
+  }, [index]);
+
+  useEffect(() => {
+    animatingRef.current = animating;
+  }, [animating]);
 
   useEffect(() => {
     const prev = document.body.style.overflow;
@@ -78,31 +104,246 @@ export default function ScrollGallery() {
   }, []);
 
   useEffect(() => {
+    // Check if target is inside textbox
+    const isInsideTextbox = (target) => {
+      if (!target) return false;
+      const textbox = textBoxRef.current;
+      if (!textbox) return false;
+      return textbox.contains(target);
+    };
+
+    // Function to update the index
+    const updateIndex = (dir) => {
+      const now = Date.now();
+
+      // Prevent processing if already animating or within debounce period
+      if (
+        animatingRef.current ||
+        isProcessingWheel.current ||
+        now - lastWheel.current < DEBOUNCE_MS
+      ) {
+        return;
+      }
+
+      // Set processing flag immediately to prevent multiple calls
+      isProcessingWheel.current = true;
+      lastWheel.current = now;
+
+      setIndex((currentIndex) => {
+        const next = Math.min(
+          EXHIBITIONS.length - 1,
+          Math.max(0, currentIndex + dir)
+        );
+        if (next !== currentIndex) {
+          setAnimating(true);
+          setPrevIndex(currentIndex);
+
+          // Reset processing flag after animation completes
+          setTimeout(() => {
+            setAnimating(false);
+            isProcessingWheel.current = false;
+            wheelDeltaAccumulator.current = 0;
+            if (wheelTimeoutId.current) {
+              clearTimeout(wheelTimeoutId.current);
+              wheelTimeoutId.current = null;
+            }
+          }, FADE_MS);
+
+          return next;
+        } else {
+          // Reset processing flag immediately if no change
+          isProcessingWheel.current = false;
+          wheelDeltaAccumulator.current = 0;
+          if (wheelTimeoutId.current) {
+            clearTimeout(wheelTimeoutId.current);
+            wheelTimeoutId.current = null;
+          }
+        }
+        return currentIndex;
+      });
+    };
+
     const onWheel = (e) => {
       // If the wheel event happened inside any element with class "sg-textbox",
       // let the browser handle it so the textbox can scroll normally.
-      const target = e.target;
-      if (target && target.closest && target.closest(".sg-textbox")) {
+      if (isInsideTextbox(e.target)) {
         return; // allow native scrolling inside text boxes
       }
 
-      const now = Date.now();
-      if (animating || now - lastWheel.current < FADE_MS + 100) return;
+      // Prevent default to stop browser scrolling
+      e.preventDefault();
 
-      const dir = e.deltaY > 0 ? 1 : -1;
-      const next = Math.min(EXHIBITIONS.length - 1, Math.max(0, index + dir));
-      if (next !== index) {
-        setAnimating(true);
-        setPrevIndex(index);
-        setIndex(next);
-        lastWheel.current = now;
-        setTimeout(() => setAnimating(false), FADE_MS);
+      // If we're animating or processing, ignore all wheel events
+      if (animatingRef.current || isProcessingWheel.current) {
+        return;
+      }
+
+      // Accumulate wheel delta
+      wheelDeltaAccumulator.current += e.deltaY;
+
+      // Threshold for triggering scroll (100px accumulated)
+      const SCROLL_THRESHOLD = 100;
+
+      // Check if we've accumulated enough delta to trigger a scroll
+      if (Math.abs(wheelDeltaAccumulator.current) >= SCROLL_THRESHOLD) {
+        // Clear any pending timeout
+        if (wheelTimeoutId.current) {
+          clearTimeout(wheelTimeoutId.current);
+          wheelTimeoutId.current = null;
+        }
+        const dir = wheelDeltaAccumulator.current > 0 ? 1 : -1;
+        wheelDeltaAccumulator.current = 0; // Reset accumulator
+        updateIndex(dir);
+      } else {
+        // Reset accumulator after a timeout if no more events (prevents slow scrolls from accumulating)
+        if (wheelTimeoutId.current) {
+          clearTimeout(wheelTimeoutId.current);
+        }
+        wheelTimeoutId.current = setTimeout(() => {
+          wheelDeltaAccumulator.current = 0;
+          wheelTimeoutId.current = null;
+        }, 150);
       }
     };
 
+    // Touch event handlers for mobile
+    const onTouchStart = (e) => {
+      const target = e.target;
+
+      // Always record the target
+      touchStartTarget.current = target;
+
+      // If touch started inside textbox, allow native scrolling by not tracking
+      if (isInsideTextbox(target)) {
+        touchStartY.current = null;
+        touchStartTime.current = null;
+        return;
+      }
+
+      // Record touch start position for swipe detection (only if outside textbox)
+      if (e.touches.length > 0) {
+        const touch = e.touches[0];
+        touchStartY.current = touch.clientY;
+        touchStartTime.current = Date.now();
+      }
+    };
+
+    const onTouchMove = (e) => {
+      // Always allow textbox to scroll if touch started or is currently in textbox
+      const startedInTextbox =
+        touchStartTarget.current && isInsideTextbox(touchStartTarget.current);
+      const currentlyInTextbox = isInsideTextbox(e.target);
+
+      if (startedInTextbox || currentlyInTextbox) {
+        // Don't prevent default - allow native scrolling
+        return;
+      }
+
+      // Only prevent default if we're tracking a swipe gesture outside textbox
+      if (touchStartY.current !== null) {
+        e.preventDefault();
+      }
+    };
+
+    const onTouchEnd = (e) => {
+      // If touch started in textbox, always ignore (allow native scroll)
+      const startedInTextbox =
+        touchStartTarget.current && isInsideTextbox(touchStartTarget.current);
+
+      if (startedInTextbox || touchStartY.current === null) {
+        touchStartY.current = null;
+        touchStartTime.current = null;
+        touchStartTarget.current = null;
+        return;
+      }
+
+      // Calculate swipe direction and distance (only if touch was outside textbox)
+      if (
+        e.changedTouches.length > 0 &&
+        touchStartY.current !== null &&
+        touchStartTime.current !== null
+      ) {
+        const touch = e.changedTouches[0];
+        const touchEndY = touch.clientY;
+        const touchEndTime = Date.now();
+
+        const deltaY = touchStartY.current - touchEndY; // Positive = swipe up (next), Negative = swipe down (prev)
+        const deltaTime = touchEndTime - touchStartTime.current;
+
+        // Minimum swipe distance (50px) and maximum time (500ms) to register as a swipe
+        const minSwipeDistance = 50;
+        const maxSwipeTime = 500;
+
+        if (Math.abs(deltaY) > minSwipeDistance && deltaTime < maxSwipeTime) {
+          const dir = deltaY > 0 ? 1 : -1; // Swipe up = next (1), Swipe down = previous (-1)
+          updateIndex(dir);
+        }
+      }
+
+      touchStartY.current = null;
+      touchStartTime.current = null;
+      touchStartTarget.current = null;
+    };
+
+    // Helper to check if target is within stage
+    const isWithinStage = (target) => {
+      const stage = stageRef.current;
+      if (!stage || !target) return false;
+      return stage.contains(target);
+    };
+
+    // Wrapped touch handlers that check if touch is within stage
+    const onTouchStartWrapped = (e) => {
+      if (isWithinStage(e.target)) {
+        onTouchStart(e);
+      }
+    };
+
+    const onTouchMoveWrapped = (e) => {
+      if (touchStartTarget.current && isWithinStage(touchStartTarget.current)) {
+        onTouchMove(e);
+      }
+    };
+
+    const onTouchEndWrapped = (e) => {
+      if (touchStartTarget.current && isWithinStage(touchStartTarget.current)) {
+        onTouchEnd(e);
+      } else {
+        // Reset if touch ended outside stage
+        touchStartY.current = null;
+        touchStartTime.current = null;
+        touchStartTarget.current = null;
+      }
+    };
+
+    // Add wheel event listener for desktop
     window.addEventListener("wheel", onWheel, { passive: false });
-    return () => window.removeEventListener("wheel", onWheel);
-  }, [index, animating]);
+
+    // Add touch event listeners for mobile on window (but only process if within stage)
+    window.addEventListener("touchstart", onTouchStartWrapped, {
+      passive: false,
+    });
+    window.addEventListener("touchmove", onTouchMoveWrapped, {
+      passive: false,
+    });
+    window.addEventListener("touchend", onTouchEndWrapped, { passive: false });
+    window.addEventListener("touchcancel", onTouchEndWrapped, {
+      passive: false,
+    });
+
+    return () => {
+      window.removeEventListener("wheel", onWheel);
+      window.removeEventListener("touchstart", onTouchStartWrapped);
+      window.removeEventListener("touchmove", onTouchMoveWrapped);
+      window.removeEventListener("touchend", onTouchEndWrapped);
+      window.removeEventListener("touchcancel", onTouchEndWrapped);
+      // Clean up any pending timeout
+      if (wheelTimeoutId.current) {
+        clearTimeout(wheelTimeoutId.current);
+        wheelTimeoutId.current = null;
+      }
+    };
+  }, []); // Empty dependency array - we use refs to access current values
 
   const current = EXHIBITIONS[index];
   const previous = prevIndex != null ? EXHIBITIONS[prevIndex] : null;
@@ -110,7 +351,7 @@ export default function ScrollGallery() {
   return (
     <>
       <Navbar />
-      <section className="sg-stage" id="expositions">
+      <section className="sg-stage" id="expositions" ref={stageRef}>
         {/* Background layer(s) */}
         {previous && (
           <div
