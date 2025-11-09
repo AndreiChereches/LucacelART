@@ -9,6 +9,17 @@
   align-items: center;
 }
 
+.gallery-image-link {
+  display: block;
+  cursor: pointer;
+  text-decoration: none;
+  transition: none; /* No hover animation */
+}
+
+.gallery-image-link:hover {
+  /* No hover effects - just pointer cursor */
+}
+
 .gallery-image {
   width: 80vw;
   max-width: 100%;

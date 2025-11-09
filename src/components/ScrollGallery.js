@@ -21,15 +21,6 @@ const EXHIBITIONS = [
     sideImage: madridSilvaniaSide,
   },
   {
-    id: "budapest",
-    title: "Budapest",
-    subtitle: "Romanian Cultural Institute in Budapest ",
-    date: "April 3-29, 2025",
-    text: "The works exhibited in the ICR Budapest Gallery are under the sign of pixels, that is, of all those small sensibilities that compose the digital image, but in which the energy of the creators and their craft are inscribed. On the one hand, a game of presence and absence is created by impregnating these energies embroidered on the works of the two, and on the other hand, the contemporary and the secular articulate and demonstrate cohabitation. Inevitably, the works place the viewer in a world that sets, and with it, the memory. This is precisely what the two artists propose: to keep these memories alive in the form of a reminder. The visions of the two artists – Flavius ​​​​Lucăcel and J. Otto Szatmari meet in this contemporary time, at the intersection of traditional art and murals, managing to create this exhibition project entitled PIXEL MANUAL.",
-    bgImage: bg,
-    sideImage: budapestSide,
-  },
-  {
     id: "venece",
     title: "Venece",
     subtitle:
@@ -38,6 +29,15 @@ const EXHIBITIONS = [
     text: "The homeland of the painter Flavius ​​Lucăcel is Silvania. You can look at it through the windows of the soul. Just as Silvania shows itself, through the window, as the dowry of a married woman. Silvania is also The Untangled Virgin, The Wedding Night, The Mother's Smile or The Grandmother's Flowers. The beauty of life with meaning. The memory of the women who gave voice to the life of the Romanian village. The houses in F. Lucăcel's Silvania are deserted today. The village of his childhood is abandoned. It only lives on in The Memories of Mothers. The painter gathers us in the imaginary Guest House today. Here, the tablecloths, the towels, everything that the women of the village have worked on for lifetimes still live. Silvania is also the beauty of these handmade things, which the artist transfigures into a gentle twilight. From the Village Paths of yesteryear, the light of beauty and kindness comes to us. In the colors kneaded by the hands of mothers, sisters, aunts and grandmothers. Women who have never seen Venice...",
     bgImage: bg,
     sideImage: venetiatSide,
+  },
+  {
+    id: "budapest",
+    title: "Budapest",
+    subtitle: "Romanian Cultural Institute in Budapest ",
+    date: "April 3-29, 2025",
+    text: "The works exhibited in the ICR Budapest Gallery are under the sign of pixels, that is, of all those small sensibilities that compose the digital image, but in which the energy of the creators and their craft are inscribed. On the one hand, a game of presence and absence is created by impregnating these energies embroidered on the works of the two, and on the other hand, the contemporary and the secular articulate and demonstrate cohabitation. Inevitably, the works place the viewer in a world that sets, and with it, the memory. This is precisely what the two artists propose: to keep these memories alive in the form of a reminder. The visions of the two artists – Flavius ​​​​Lucăcel and J. Otto Szatmari meet in this contemporary time, at the intersection of traditional art and murals, managing to create this exhibition project entitled PIXEL MANUAL.",
+    bgImage: bg,
+    sideImage: budapestSide,
   },
   {
     id: "palma",
@@ -384,6 +384,28 @@ export default function ScrollGallery() {
               </div>
             </div>
 
+            <div className="sg-scroll-indicator">
+              <svg
+                className="sg-scroll-arrow"
+                width="30"
+                height="30"
+                viewBox="0 0 24 24"
+                fill="none"
+                xmlns="http://www.w3.org/2000/svg"
+                style={{ display: "block" }}
+              >
+                <path
+                  d="M7 10L12 15L17 10"
+                  stroke="#ffffff"
+                  strokeWidth="3"
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  fill="none"
+                />
+              </svg>
+              <span className="sg-scroll-text">scroll</span>
+            </div>
+
             <div className="sg-indicator">
               <span>{(prevIndex ?? 0) + 1}</span> /{" "}
               <span>{EXHIBITIONS.length}</span>
@@ -411,6 +433,28 @@ export default function ScrollGallery() {
             <div className="sg-side-content">
               <img src={current.sideImage} alt={`${current.title} side`} />
             </div>
+          </div>
+
+          <div className="sg-scroll-indicator">
+            <svg
+              className="sg-scroll-arrow"
+              width="30"
+              height="30"
+              viewBox="0 0 24 24"
+              fill="none"
+              xmlns="http://www.w3.org/2000/svg"
+              style={{ display: "block" }}
+            >
+              <path
+                d="M7 10L12 15L17 10"
+                stroke="#ffffff"
+                strokeWidth="3"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                fill="none"
+              />
+            </svg>
+            <span className="sg-scroll-text">scroll</span>
           </div>
 
           <div className="sg-indicator">

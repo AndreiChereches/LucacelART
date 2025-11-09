@@ -58,7 +58,7 @@ body,
   padding: 4vh 6vw 3vh; /* Reduced bottom padding to ensure indicator fits */
   box-sizing: border-box;
   opacity: 0;
-  overflow: hidden; /* Prevent content from overflowing */
+  overflow: visible; /* Allow scroll indicator to be visible */
 }
 .sg-content.visible {
   opacity: 1;
@@ -110,7 +110,8 @@ body,
   box-sizing: border-box;
   margin-bottom: 48px; /* leave space below the main area */
   min-height: 0; /* Allow flex item to shrink below content size */
-  overflow: hidden; /* Prevent overflow */
+  overflow: visible; /* Allow scroll indicator to be visible */
+  position: relative; /* Ensure positioning context for children */
 }
 
 /* Left: scrollable text area (fills height) */
@@ -152,6 +153,7 @@ body,
   max-height: calc(
     100vh - 64px - 200px
   ); /* keep image visually balanced with textbox */
+  position: relative;
 }
 
 .sg-side-content img {
@@ -161,6 +163,76 @@ body,
   max-width: 100%;
   object-fit: contain; /* preserves entire image in the column; change to cover if you prefer cropping */
   box-shadow: 0 12px 40px rgba(0, 0, 0, 0.35);
+}
+
+/* Scroll indicator - positioned above the page indicator */
+.sg-scroll-indicator {
+  width: auto; /* Only as wide as content */
+  max-width: none; /* Remove max-width constraint */
+  margin: 0 auto 15px; /* Centered with space below */
+  display: inline-flex !important; /* Only as wide as content */
+  flex-direction: row; /* Horizontal layout: arrow and text side by side */
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  color: #ffffff !important;
+  font-size: 1.4rem;
+  font-weight: 700;
+  z-index: 1000; /* Very high z-index to ensure visibility */
+  pointer-events: none;
+  white-space: nowrap;
+  background: rgba(
+    0,
+    0,
+    0,
+    0.75
+  ) !important; /* More opaque background for better visibility */
+  padding: 8px 16px;
+  border-radius: 10px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.5);
+  opacity: 1 !important; /* Force visibility */
+  flex-shrink: 0;
+}
+
+.sg-scroll-arrow {
+  width: 30px !important;
+  height: 30px !important;
+  color: #ffffff !important;
+  fill: none !important;
+  stroke: #ffffff !important;
+  stroke-width: 3 !important;
+  animation: sg-bounce 2s infinite;
+  flex-shrink: 0;
+  display: block !important;
+  opacity: 1 !important;
+  transform-origin: center center;
+}
+
+.sg-scroll-arrow path {
+  stroke: #ffffff !important;
+  stroke-width: 3 !important;
+  fill: none !important;
+}
+
+.sg-scroll-text {
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  font-size: 1.2rem;
+  white-space: nowrap;
+  color: #ffffff !important;
+  font-weight: 700;
+  opacity: 1 !important;
+}
+
+@keyframes sg-bounce {
+  0%,
+  100% {
+    transform: translateY(0) translateX(0);
+  }
+  50% {
+    transform: translateY(8px) translateX(0);
+  }
 }
 
 /* Indicator row (below main) */
@@ -303,6 +375,34 @@ body,
     max-height: 260px;
     flex-shrink: 1;
     min-height: 0;
+    position: relative;
+  }
+  .sg-scroll-indicator {
+    width: auto !important; /* Only as wide as content on mobile */
+    max-width: none !important;
+    margin: 0 auto 10px !important; /* Space above page indicator on mobile */
+    font-size: 1rem;
+    gap: 6px;
+    flex-direction: row; /* Keep horizontal on mobile too */
+    padding: 6px 12px !important;
+    background: rgba(
+      0,
+      0,
+      0,
+      0.8
+    ) !important; /* More opaque on mobile for better visibility */
+    display: inline-flex !important;
+    opacity: 1 !important;
+    position: static !important; /* Remove absolute positioning on mobile */
+  }
+  .sg-scroll-arrow {
+    width: 24px !important;
+    height: 24px !important;
+  }
+  .sg-scroll-text {
+    font-size: 1rem !important;
+    letter-spacing: 2px;
+    color: #ffffff !important;
   }
   .sg-textbox {
     height: 30vh; /* Reduced further */
